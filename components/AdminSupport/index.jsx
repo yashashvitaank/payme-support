@@ -4,9 +4,9 @@ import SupportChat from '../SupportChat'
 
 function AdminSupport() {
   return (
-    <div className=''>
-        <div className='w-[30%]'><SidePanel /></div>
-        <div className='w-[60%]'><SupportChat /></div>
+    <div className='grid grid-cols-[30%_auto]'>
+        <SidePanel />
+        <SupportChat />
     </div>
   )
 }

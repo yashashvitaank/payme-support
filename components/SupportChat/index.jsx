@@ -41,7 +41,7 @@ function SupportChat() {
   }, []);
 
   return (
-    <div className="pt-20 customGradient text-black w-full h-screen max-h-screen shadow-lg">
+    <div className="customGradient text-black w-full h-full pb-3 bg-red-700 shadow-lg grid grid-rows-[56px_auto_48px]">
       <NavBar tktId='tkn0101' />
       <TextBox messages={messagesList} />
       <ChatInput handleSend={handleSend} input={input} setInput={setInput} />

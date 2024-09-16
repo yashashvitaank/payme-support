@@ -3,8 +3,8 @@ import TextMessage from "../TextMessage";
 
 function TextBox({messages = []}) {
   return (
-    <div className="h-full px-3 flex flex-col gap-4">
-      {Children.toArray(messages.map((msg) => <TextMessage {...msg} />))}
+    <div className="px-3 flex flex-col overflow-y-scroll max-h-[calc(100dvh-120px)]">
+      {Children.toArray([...messages,...messages,...messages,...messages].map((msg) => <TextMessage {...msg} />))}
     </div>
   );
 }
