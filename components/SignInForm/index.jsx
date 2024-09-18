@@ -11,8 +11,8 @@ function SignInForm() {
         router.replace('/support');
     }
   return (
-    <div className='relative w-[90%] min-h-[60%] md:h-[50%] md:w-[50%] lg:h-[70%] lg:w-[35%]'>
-        <form className="h-full w-full bg-white rounded-lg shadow-lg flex flex-col gap-7 items-center p-4" onSubmit={(e)=> {e.preventDefault(); e.stopPropagation();}}>
+    <div className='relative w-[90%] md:w-[50%] lg:w-[30%] h-fit'>
+        <form className="h-full w-full bg-white rounded-lg shadow-lg flex flex-col gap-7 items-center p-4  pb-8" onSubmit={(e)=> {e.preventDefault(); e.stopPropagation();}}>
             <Image src={Logo} width={150} height={120} alt="logo" className="" />
             <CustomInput placeholder="Mail" />
             <CustomInput placeholder="Password" />
