@@ -5,6 +5,8 @@ import CustomInput from "../CustomInput";
 import CustomButton from "../CustomButton";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignInForm() {
     const [email, setEmail] = useState('');
@@ -14,66 +16,52 @@ function SignInForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // Extract id from the URL parameters
     useEffect(() => {
-        const urlId = searchParams.get('id'); // Get the `id` from URL
+        const urlId = searchParams.get('id');
         if (urlId) {
-          console.log(urlId)
             setSecretKey(urlId);
         }
     }, [searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
-        console.log("clicked");
-
-        // Create the payload for API request, including the id from the URL
         const userData = {
-            id, // Include the id from the URL params
             email,
             password,
-            secretKey
+            id: secretKey,
         };
 
         try {
-            // API call
-            const response = await fetch('http://localhost:3001/api/external/support-login', { // Update this with your API endpoint
+            const response = await fetch('http://localhost:3001/api/external/support-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(userData),
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Handle success (e.g., storing token, redirecting)
-                console.log('Login successful:', data);
-
-                // Redirect to the support page
+            const result = await response.json();
+            console.log(result); // Log the result for debugging
+            if (result.success) {
                 router.replace('/support');
             } else {
-                // Handle errors
-                console.error('Login failed:', data.message);
-                alert(data.message);
+                toast.error("No matching data found");
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            toast.error("An error occurred while submitting the form.");
         }
     };
 
     return (
         <div className="relative w-[90%] md:w-[50%] lg:w-[30%] h-fit">
+          <ToastContainer />
             <form className="h-full w-full bg-white rounded-lg shadow-lg flex flex-col gap-7 items-center p-4 pb-8" onSubmit={handleSubmit}>
-                <Image src={Logo} width={150} height={120} alt="logo" className="" />
-                <CustomInput placeholder="Mail" value={email} onChange={(e) => setEmail(e.target.value)}  className="inputtext-black"/>
+                <Image src={Logo} width={150} height={120} alt="logo" />
+                <CustomInput placeholder="Mail" value={email} onChange={(e) => setEmail(e.target.value)} className="inputtext-black"/>
                 <CustomInput placeholder="Pin" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <CustomInput placeholder="Ticket ID" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
-                <CustomButton buttonName="Sign In" handleClick={handleSubmit} />
+                <CustomInput placeholder={secretKey} value={secretKey} readOnly />
+                <CustomButton buttonName="Sign In" />
             </form>
         </div>
     );
