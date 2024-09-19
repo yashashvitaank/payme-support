@@ -16,6 +16,7 @@ function SignInForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    // Set secretKey from the URL search params
     useEffect(() => {
         const urlId = searchParams.get('id');
         if (urlId) {
@@ -33,7 +34,7 @@ function SignInForm() {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/api/external/support-login', {
+            const response = await fetch('http://localhost:3000/api/external/support-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,9 +59,25 @@ function SignInForm() {
           <ToastContainer />
             <form className="h-full w-full bg-white rounded-lg shadow-lg flex flex-col gap-7 items-center p-4 pb-8" onSubmit={handleSubmit}>
                 <Image src={Logo} width={150} height={120} alt="logo" />
-                <CustomInput placeholder="Mail" value={email} onChange={(e) => setEmail(e.target.value)} className="inputtext-black"/>
-                <CustomInput placeholder="Pin" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <CustomInput placeholder={secretKey} value={secretKey} readOnly />
+                
+                {/* Using CustomInput with proper state binding */}
+                <CustomInput 
+                    placeholder="Mail" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    className="inputtext-black"
+                />
+                <CustomInput 
+                    placeholder="Pin" 
+                    type="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                />
+                <CustomInput 
+                    placeholder="Secret Key" 
+                    value={secretKey} 
+                    readOnly 
+                />
                 <CustomButton buttonName="Sign In" />
             </form>
         </div>
