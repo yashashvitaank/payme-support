@@ -29,7 +29,7 @@ function SignInForm() {
 
         const userData = {
             email,
-            password,
+            pin: password,
             id: secretKey,
         };
 
